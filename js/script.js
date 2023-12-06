@@ -19,7 +19,7 @@
 //     });
 // });
 
-let gameState = {
+/* let gameState = {
   size: 3,
   board: [],
   gameStarted: false,
@@ -50,6 +50,7 @@ const generateBoardGame = () => {
     let div = document.createElement("div");
     div.classList.add("square");
     div.setAttribute("id", `square-${i}`);
+    div.setAttribute("data-i", i);
     boardGame.appendChild(div);
   }
 
@@ -61,34 +62,108 @@ const generateBoardGame = () => {
 function newMove(e) {
   const index = e.target.getAttribute("data-i");
   e.target.innerHTML = gameState.player;
+  e.target.classList.add(gameState.player);
   e.target.removeEventListener('click', newMove);
-}
 
-/* const handleCellClick = (index) => {
-  if (gameState.gameOver || gameState.board[index] !== "") {
+  gameState.board[index] = gameState.player; // Atualize o estado do tabuleiro
+  gameState.player = gameState.player === "X" ? "O" : "X";
+} */
+
+let gameState = {
+  size: 3,
+  board: [],
+  gameStarted: false,
+  player: "X",
+  gameOver: false,
+  winner: "",
+};
+
+let boardGame = [];
+
+const generateBoardGame = () => {
+  if (gameState.gameStarted) {
     return;
   }
 
-  const currentPlayer = gameState.player;
-  const cell = document.getElementById(`square-${index}`);
+  gameState.gameStarted = true;
 
-  placeMark(cell, currentPlayer);
-  gameState.board[index] = currentPlayer;
+  gameState.size = parseInt(document.getElementById("boardSize").value);
+  const boardGame = document.getElementById("boardGame");
 
-  placeMark(cell, currentPlayer);
-  gameState.board[index] = currentPlayer;
+  boardGame.style.gridTemplateColumns = `repeat(${gameState.size}, 1fr)`;
+  boardGame.style.gridTemplateRows = `repeat(${gameState.size}, 1fr)`;
 
-  const isWin = checkForWin(currentPlayer);
-  const isDraw = checkForDraw();
+  gameState.board = [];
 
-  if (isWin || isDraw) {
-    endGame(isDraw);
-  } else {
-    swapTurns();
+  for (let i = 0; i < gameState.size; i++) {
+    gameState.board.push(new Array(gameState.size).fill(""));
+    for (let j = 0; j < gameState.size; j++) {
+      let div = document.createElement("div");
+      div.classList.add("square");
+      div.setAttribute("id", `square-${i}-${j}`);
+      div.setAttribute("data-i", i);
+      div.setAttribute("data-j", j);
+      boardGame.appendChild(div);
+    }
   }
+
+  const cells = document.querySelectorAll("div.square");
+  cells.forEach((item) => {
+    item.addEventListener("click", newMove);
+  });
 };
 
-const placeMark = (cell, classToAdd) => {
-  cell.textContent = classToAdd; // Adiciona 'X' ou 'O' ao conteúdo da célula
-  cell.classList.add(classToAdd); // Adiciona a classe para estilização
-}; */
+function newMove(e) {
+  if (gameState.gameOver) {
+    return;
+  }
+
+  const row = parseInt(e.target.getAttribute("data-i"));
+  const col = parseInt(e.target.getAttribute("data-j"));
+
+  if (gameState.board[row][col] !== "") {
+    return;
+  }
+
+  e.target.innerHTML = gameState.player;
+  e.target.classList.add(gameState.player);
+
+  gameState.board[row][col] = gameState.player;
+
+  if (checkForWin(row, col)) {
+    gameState.gameOver = true;
+    gameState.winner = gameState.player;
+    console.log(`Player ${gameState.winner} wins!`);
+  } else {
+    gameState.player = gameState.player === "X" ? "O" : "X";
+  }
+}
+
+function checkForWin(row, col) {
+  const player = gameState.player;
+
+  // Verificar linha
+  if (gameState.board[row].every((cell) => cell === player)) {
+    return true;
+  }
+
+  // Verificar coluna
+  if (gameState.board.every((row) => row[col] === player)) {
+    return true;
+  }
+
+  // Verificar diagonal principal
+  if (row === col && gameState.board.every((row, i) => row[i] === player)) {
+    return true;
+  }
+
+  // Verificar diagonal secundária
+  if (
+    row + col === gameState.size - 1 &&
+    gameState.board.every((row, i) => row[gameState.size - 1 - i] === player)
+  ) {
+    return true;
+  }
+
+  return false;
+}

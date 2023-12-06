@@ -73,3 +73,26 @@ footer {
     text-align: center;
 }
 
+/* Adicione isso ao seu arquivo de estilo CSS */
+.square.X {
+    color: blue; /* Cor para o jogador X */
+}
+
+.square.O {
+    color: red; /* Cor para o jogador O */
+}
+
+.square {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    border: 2px solid #333; /* Adiciona uma borda à célula */
+    background-color: #fff; /* Cor de fundo */
+    cursor: pointer; /* Adiciona um cursor ao passar o mouse sobre a célula */
+    transition: background-color 0.3s ease; /* Adiciona uma transição suave na cor de fundo */
+}
+
+.square:hover {
+    background-color: #eee; /* Cor de fundo quando o mouse passa sobre a célula */
+}
