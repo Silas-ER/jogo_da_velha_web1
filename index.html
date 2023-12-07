@@ -11,8 +11,8 @@
         <h1 class="header">Jogo da Velha</h1>
     </header>
 
-    <main class="mainInputContainer">
-            <label for="boardSize">Selecione o tamanho do tabuleiro:</label>
+    <section id="gameHeader">
+        <label for="boardSize">Selecione o tamanho do tabuleiro:</label>
             <select id="boardSize">
                 <option value="3">3x3</option>
                 <option value="4">4x4</option>
@@ -24,14 +24,18 @@
                 <option value="10">10x10</option>
             </select>
             <section class="buttonContainer">
-                <button id="btn-pve" type="button" onclick="generateBoardGame()">Jogar contra BOT</button>
-                <button id="btn-pvp" type="button" onclick="generateBoardGame()">Player VS player</button>
+                <button class="btn bot" type="button" onclick="generateBoardGame(2)">Jogar contra BOT</button>
+                <button class="btn pvp" type="button" onclick="generateBoardGame(1)">Player VS player</button>
             </section>
+    </section>
+
+    <section id="mainInputContainer">
+            
         <div id="boardGame">
             
         </div>
         
-    </main>
+    </section>
 
     <footer id="footer-page">
         Produzido pelos alunos Daniel, Luiz e Silas

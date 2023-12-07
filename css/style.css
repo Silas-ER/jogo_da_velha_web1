@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,900;1,100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
 
 * {
     margin: 0;
@@ -7,8 +7,10 @@
 }
 
 html, body {
-    font-family: 'Lato';
-    color : #333;
+    font-family: 'Montserrat', sans-serif;
+    color : #f8f8f8;
+    background: rgba(0,210,255,1);
+    background: linear-gradient(30deg, rgba(58,123,213,1) 0%, rgba(0,210,255,1) 100%);
     height: 100%;
     width: 100%;
     display: flex;
@@ -18,14 +20,13 @@ html, body {
 
 
 header {
-    background-color: #fff;
     padding: 20px 0;
     text-align: center;	
 }
 
 select {
     padding: 10px 20px;
-    border: 1px solid #333;
+    border: none;
     border-radius: 5px;
     background-color: #fff;
     color: #333;
@@ -34,7 +35,7 @@ select {
     outline: none;
 }
 
-main {
+#gameHeader {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -45,54 +46,126 @@ main {
 button {
     margin: 10px 0;
     padding: 10px 20px;
-    border: 1px solid #333;
+    border: none;
     border-radius: 5px;
-    background-color: #fff;
     color: #333;
     font-size: 1.2rem;
     cursor: pointer;
 }
 
+.pvp {
+    background-color: #F54D62;
+    color: #fff;
+    font-weight: bold;
+}
+
+.bot {
+    background-color: #87E43A;
+    color: #fff;
+    font-weight: bold;
+}
+
+#mainInputContainer {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
 #boardGame {
-    border: 1px solid #333;
     width: 35vw;
     height: 35vw;
+    
+    min-width: 500px;
+    min-height: 500px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
 }
 
-#boardGame .square {
-    border: 1px solid #000;
+.square {
+    width: var(--cell-size);
+  height: var(--cell-size);
+  border: 3px solid #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.square.cross,
+.square.circle {
+    cursor: not-allowed;
+}
+
+.square.cross::before,
+.square.cross::after{
+    background-color: #F54D62;
+
+}
+.square.circle::before {
+    background-color: #87E43A;
+}
+
+
+#boardGame.cross .square:not(.cross):not(.circle):hover::before,
+#boardGame.cross .square:not(.cross):not(.circle):hover::after,
+#boardGame.circle .square:not(.cross):not(.circle):hover::before {
+    background-color: rgb(195, 6, 6);
+    
+}
+
+.square.cross::before,
+.square.cross::after,
+#boardGame.cross .square:not(.cross):not(.circle):hover::before,
+#boardGame.cross .square:not(.cross):not(.circle):hover::after {
+  content: '';
+  position: absolute;
+  width: calc(70% * .15);
+  height: 70%;
+}
+
+.square.cross::before,
+#boardGame.cross .square:not(.cross):not(.circle):hover::before {
+  transform: rotate(45deg);
+}
+
+.square.cross::after,
+#boardGame.cross .square:not(.cross):not(.circle):hover::after {
+  transform: rotate(-45deg);
+}
+
+.square.circle::before,
+.square.circle::after,
+#boardGame.circle .square:not(.cross):not(.circle):hover::before,
+#boardGame.circle .square:not(.cross):not(.circle):hover::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+}
+
+.square.circle::before,
+#boardGame.circle .square:not(.cross):not(.circle):hover::before {
+  width: 70%;
+  height: 70%;
+}
+
+.square.circle::after,
+#boardGame.circle .square:not(.cross):not(.circle):hover::after {
+    width: calc(70% / 1.5);
+  height: calc(70% / 1.5);
+  background-color: transparent; /* Cor do buraco no meio */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1; /* Certifique-se de que o buraco esteja acima do ::before */
 }
 
 footer {
-    background-color: #2c2c2c;
     color: #fff;
     padding: 20px 0;
     text-align: center;
-}
-
-/* Adicione isso ao seu arquivo de estilo CSS */
-.square.X {
-    color: blue; /* Cor para o jogador X */
-}
-
-.square.O {
-    color: red; /* Cor para o jogador O */
-}
-
-.square {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2em;
-    border: 2px solid #333; /* Adiciona uma borda à célula */
-    background-color: #fff; /* Cor de fundo */
-    cursor: pointer; /* Adiciona um cursor ao passar o mouse sobre a célula */
-    transition: background-color 0.3s ease; /* Adiciona uma transição suave na cor de fundo */
-}
-
-.square:hover {
-    background-color: #eee; /* Cor de fundo quando o mouse passa sobre a célula */
 }
