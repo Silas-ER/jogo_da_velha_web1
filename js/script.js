@@ -1,11 +1,12 @@
-const cross = "&#10060";
+
 
 let gameState = {
   size: 3,
   board: [],
   gameStarted: false,
   gameMode: "",
-  player: cross,
+  turn: "",
+  player1: "",
   gameOver: false,
   winner: "",
 };
@@ -13,6 +14,16 @@ let gameState = {
 let boardGame = [];
 
 const generateBoardGame = (gameMode) => {
+  gameState.turn = Math.random() < 0.5 ? "X" : "O";
+
+  if (gameState.turn === "O") {
+    gameState.player1 = "X";
+  } else {
+    gameState.player1 = "O";
+  }
+
+  console.log(gameState);
+
   if (gameState.gameStarted) {
     return;
   }
@@ -54,13 +65,16 @@ const generateBoardGame = (gameMode) => {
 
       boardGame.appendChild(div);
     }
-
   }
 
   const cells = document.querySelectorAll("div.square");
   cells.forEach((item) => {
     item.addEventListener("click", newAction);
   });
+
+  //remove #gameHeader and content\
+  const gameHeader = document.getElementById("gameHeader");
+  gameHeader.parentNode.removeChild(gameHeader);
 };
 
 function newAction(e) {
@@ -75,45 +89,67 @@ function newAction(e) {
     return;
   }
 
-  // e.target.innerHTML = gameState.player;
-  e.target.classList.add(gameState.player === cross ? "cross" : "circle");
+  // e.target.innerHTML = gameState.turn;
+  e.target.classList.add(gameState.turn === "X" ? "cross" : "circle");
 
-  gameState.board[row][col] = gameState.player;
+  gameState.board[row][col] = gameState.turn;
 
   if (checkForWin(row, col)) {
     gameState.gameOver = true;
-    gameState.winner = gameState.player;
-    alert(`Player ${gameState.winner === cross ? "X" : "O"} wins!`);
+    gameState.winner = gameState.turn;
+    alert(`${gameState.turn} ganhou!`);
+    document.getElementById("winner").innerHTML = gameState.winner;
   } else {
-    gameState.player = gameState.player === cross ? "O" : cross;
+    gameState.turn = gameState.turn === "X" ? "O" : "X";
+  }
+
+  if (gameState.gameMode === "bot" && gameState.turn === gameState.player1) {
+    setTimeout(botMove, 500);
   }
 }
 
 function checkForWin(row, col) {
-  const player = gameState.player;
+  const turn = gameState.turn;
 
   // Verificar linha
-  if (gameState.board[row].every((cell) => cell === player)) {
+  if (gameState.board[row].every((cell) => cell === turn)) {
     return true;
   }
 
   // Verificar coluna
-  if (gameState.board.every((row) => row[col] === player)) {
+  if (gameState.board.every((row) => row[col] === turn)) {
     return true;
   }
 
   // Verificar diagonal principal
-  if (row === col && gameState.board.every((row, i) => row[i] === player)) {
+  if (row === col && gameState.board.every((row, i) => row[i] === turn)) {
     return true;
   }
 
   // Verificar diagonal secundária
   if (
     row + col === gameState.size - 1 &&
-    gameState.board.every((row, i) => row[gameState.size - 1 - i] === player)
+    gameState.board.every((row, i) => row[gameState.size - 1 - i] === turn)
   ) {
     return true;
   }
 
   return false;
+}
+
+
+function botMove() {
+  if (gameState.gameOver) {  // Prevent bot move if game is over
+    return;
+  }
+
+  let row, col;
+
+  do {
+    row = Math.floor(Math.random() * gameState.size);
+    col = Math.floor(Math.random() * gameState.size);
+  } while (gameState.board[row][col] !== "");
+
+  const cell = document.getElementById(`square-${row}-${col}`);
+  cell.click();
 }
