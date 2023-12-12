@@ -1,5 +1,5 @@
 
-
+//é o objeto que armazena o estado do jogo
 let gameState = {
   size: 3,
   board: [],
@@ -13,6 +13,7 @@ let gameState = {
 
 let boardGame = [];
 
+//responsavel por gerar o tabuleiro do jogo da velha na tela
 const generateBoardGame = (gameMode) => {
   gameState.turn = Math.random() < 0.5 ? "X" : "O";
 
@@ -24,16 +25,16 @@ const generateBoardGame = (gameMode) => {
 
   console.log(gameState);
 
-  if (gameState.gameStarted) {
+  if (gameState.gameStarted) { //verifica se o jogo já foi iniciado e impede que seja iniciado novamente
     return;
   }
 
-  gameState.gameMode = gameMode === 2  ? "bot" : "pvp";
+  gameState.gameMode = gameMode === 2  ? "bot" : "pvp"; //se gameMode for igual a 2, o jogo será contra o bot, caso contrário, será pvp
   gameState.gameStarted = true;
 
   console.log(gameState.gameMode);
   
-  gameState.size = parseInt(document.getElementById("boardSize").value);
+  gameState.size = parseInt(document.getElementById("boardSize").value); //captura o valor do input e converte para inteiro e armazena em gameState.size
   const boardGame = document.getElementById("boardGame");
   
   boardGame.style.gridTemplateColumns = `repeat(${gameState.size}, 1fr)`;
@@ -41,6 +42,7 @@ const generateBoardGame = (gameMode) => {
 
   gameState.board = [];
 
+  //cria o tabuleiro do jogo da velha com uma div para cada célula do tabuleiro
   for (let i = 0; i < gameState.size; i++) {
     gameState.board.push(new Array(gameState.size).fill(""));
     for (let j = 0; j < gameState.size; j++) {
@@ -63,10 +65,11 @@ const generateBoardGame = (gameMode) => {
         div.style.borderBottom = "none";
       }
 
-      boardGame.appendChild(div);
+      boardGame.appendChild(div); //adiciona o elemento div ao elemento boardGame
     }
   }
 
+  //adiciona o evento de click a cada célula do tabuleiro do jogo da velha chamando o newaction
   const cells = document.querySelectorAll("div.square");
   cells.forEach((item) => {
     item.addEventListener("click", newAction);
@@ -89,6 +92,7 @@ function newAction(e) {
     return;
   }
 
+  // adiciona o símbolo do jogador na célula clicada
   // e.target.innerHTML = gameState.turn;
   e.target.classList.add(gameState.turn === "X" ? "cross" : "circle");
 
