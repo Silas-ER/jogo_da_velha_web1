@@ -1,92 +1,97 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html, body {
-    font-family: 'Montserrat', sans-serif;
-    color : #f8f8f8;
-    background: rgba(0,210,255,1);
-    background: linear-gradient(30deg, rgba(58,123,213,1) 0%, rgba(0,210,255,1) 100%);
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+html,
+body {
+  font-family: "Montserrat", sans-serif;
+  color: #f8f8f8;
+  background: rgba(0, 210, 255, 1);
+  background: linear-gradient(
+    30deg,
+    rgba(58, 123, 213, 1) 0%,
+    rgba(0, 210, 255, 1) 100%
+  );
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-
 
 header {
-    padding: 20px 0;
-    text-align: center;	
+  padding: 20px 0;
+  text-align: center;
 }
 
 select {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #333;
-    font-size: 1.2rem;
-    cursor: pointer;
-    outline: none;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  font-size: 1.2rem;
+  cursor: pointer;
+  outline: none;
 }
 
 #gameHeader {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 30%;
+  padding: 0 30%;
 }
 
+
+
 button {
-    margin: 10px 0;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    color: #333;
-    font-size: 1.2rem;
-    cursor: pointer;
+  margin: 10px 0;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: #333;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .pvp {
-    background-color: #F54D62;
-    color: #fff;
-    font-weight: bold;
+  background-color: #f54d62;
+  color: #fff;
+  font-weight: bold;
 }
 
 .bot {
-    background-color: #87E43A;
-    color: #fff;
-    font-weight: bold;
+  background-color: #87e43a;
+  color: #fff;
+  font-weight: bold;
 }
 
 #mainInputContainer {
-    
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #boardGame {
-    width: 35vw;
-    height: 35vw;
-    
-    min-width: 500px;
-    min-height: 500px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+  width: 35vw;
+  height: 35vw;
+
+  min-width: 500px;
+  min-height: 500px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 }
 
 .square {
-    width: var(--cell-size);
+  width: var(--cell-size);
   height: var(--cell-size);
   border: 3px solid #ffffff;
   display: flex;
@@ -98,33 +103,30 @@ button {
 
 .square.cross,
 .square.circle {
-    cursor: not-allowed;
+  cursor: not-allowed;
 }
 
 .square.cross::before,
-.square.cross::after{
-    background-color: #F54D62;
-
+.square.cross::after {
+  background-color: #f54d62;
 }
 .square.circle::before {
-    background-color: #87E43A;
+  background-color: #87e43a;
 }
-
 
 #boardGame.cross .square:not(.cross):not(.circle):hover::before,
 #boardGame.cross .square:not(.cross):not(.circle):hover::after,
 #boardGame.circle .square:not(.cross):not(.circle):hover::before {
-    background-color: rgb(195, 6, 6);
-    
+  background-color: rgb(195, 6, 6);
 }
 
 .square.cross::before,
 .square.cross::after,
 #boardGame.cross .square:not(.cross):not(.circle):hover::before,
 #boardGame.cross .square:not(.cross):not(.circle):hover::after {
-  content: '';
+  content: "";
   position: absolute;
-  width: calc(70% * .15);
+  width: calc(70% * 0.15);
   height: 70%;
 }
 
@@ -142,7 +144,7 @@ button {
 .square.circle::after,
 #boardGame.circle .square:not(.cross):not(.circle):hover::before,
 #boardGame.circle .square:not(.cross):not(.circle):hover::after {
-  content: '';
+  content: "";
   position: absolute;
   border-radius: 50%;
 }
@@ -155,7 +157,7 @@ button {
 
 .square.circle::after,
 #boardGame.circle .square:not(.cross):not(.circle):hover::after {
-    width: calc(70% / 1.5);
+  width: calc(70% / 1.5);
   height: calc(70% / 1.5);
   background-color: transparent; /* Cor do buraco no meio */
   top: 50%;
@@ -164,8 +166,14 @@ button {
   z-index: 1; /* Certifique-se de que o buraco esteja acima do ::before */
 }
 
+.gameTurn {
+    width: 6rem;
+    height: 6rem;
+    border: none;
+}
+
 footer {
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
 }
