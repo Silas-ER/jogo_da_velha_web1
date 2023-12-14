@@ -34,16 +34,14 @@
     </section>
     <!-- Container para exibição do tabuleiro -->
     <section id="mainInputContainer">
-
         <div id="boardGame">
 
         </div>
 
-        <section class="buttonFinalGame">
-            <button class="btn reset" type="button" onclick="resetGame()">Reiniciar</button>
-            <button class="btn init" type="button" onclick="returnHome()">Voltar a Página Inicial</button>
+        <section class="buttonFinalGame" id="buttonContainer">
+            <button id="resetButton" onclick="resetGame()" style="display: none;">Resetar Jogo</button>
+            <button id="homeButton" onclick="returnHome()" style="display: none;">Voltar para Home</button>            
         </section>
-
     </section>
 
     <footer id="footer-page">

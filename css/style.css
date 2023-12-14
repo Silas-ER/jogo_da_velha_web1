@@ -177,3 +177,14 @@ footer {
   padding: 20px 0;
   text-align: center;
 }
+
+#mainInputContainer {
+  position: relative;
+}
+
+.buttonFinalGame {
+  position: absolute;
+  top: 50%; /* Ajuste conforme necessário para a posição vertical */
+  left: 50%; /* Ajuste conforme necessário para a posição horizontal */
+  transform: translate(-50%, -50%);
+}

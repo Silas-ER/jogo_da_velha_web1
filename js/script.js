@@ -82,10 +82,12 @@ function newAction(e) {
   if (result === 'tie') {
       gameState.gameOver = true;
       alert(`Deu velha!`);
+      showEndGameButtons();
   } else if (result) {
       gameState.gameOver = true;
       gameState.winner = gameState.turn;
       alert(`O jogador com ${gameState.turn} venceu!`);
+      showEndGameButtons();
   } else {
       changeTurn();
       gameState.turn = gameState.turn === "X" ? "O" : "X";
@@ -104,6 +106,7 @@ function changeTurn() {
 }
 
 function resetGame() {
+  hideEndGameButtons();
   gameState.gameStarted = false;
   gameState.gameOver = false;
   gameState.winner = "";
@@ -117,6 +120,20 @@ function resetGame() {
   });
   
   changeGameHeader();
+}
+
+function showEndGameButtons() {
+  const resetButton = document.getElementById("resetButton");
+  const homeButton = document.getElementById("homeButton");
+  resetButton.style.display = "block";
+  homeButton.style.display = "block";
+}
+
+function hideEndGameButtons() {
+  const resetButton = document.getElementById("resetButton");
+  const homeButton = document.getElementById("homeButton");
+  resetButton.style.display = "none";
+  homeButton.style.display = "none";
 }
 
 function returnHome() {
