@@ -12,9 +12,10 @@
     <header>
         <h1 class="header">Jogo da Velha</h1>
     </header>
-
+    <!-- Seção que contém as opções de jogo -->
     <section id="gameHeader">
         <label for="boardSize">Selecione o tamanho do tabuleiro:</label>
+        <!-- Menu suspenso para seleção do tamnho do tabuleiro -->
         <select id="boardSize">
             <option value="3">3x3</option>
             <option value="4">4x4</option>
@@ -25,12 +26,13 @@
             <option value="9">9x9</option>
             <option value="10">10x10</option>
         </select>
+        <!-- Seção contendo os botões para seleção de modo de jogo -->
         <section class="buttonContainer">
             <button class="btn bot" type="button" onclick="generateBoardGame(2)">Jogar contra BOT</button>
             <button class="btn pvp" type="button" onclick="generateBoardGame(1)">Player VS player</button>
         </section>
     </section>
-
+    <!-- Container para exibição do tabuleiro -->
     <section id="mainInputContainer">
 
         <div id="boardGame">
