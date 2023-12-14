@@ -102,3 +102,23 @@ function changeTurn() {
   turnImage.classList.remove(gameState.turn === "X" ? "cross" : "circle");
   turnImage.classList.add(gameState.turn === "X" ? "circle" : "cross");
 }
+
+function resetGame() {
+  gameState.gameStarted = false;
+  gameState.gameOver = false;
+  gameState.winner = "";
+  gameState.turn = gameState.player1 === "X" ? "O" : "X";
+  
+  const cells = document.querySelectorAll("div.square");
+  cells.forEach((cell) => {
+    cell.innerHTML = ""; // Remover "X" e "O" das células
+    cell.classList.remove("cross", "circle"); // Remover estilos de "X" e "O"
+    gameState.board = gameState.board.map(row => row.map(() => "")); // Limpar o estado do tabuleiro
+  });
+  
+  changeGameHeader();
+}
+
+function returnHome() {
+  location.reload();
+}
