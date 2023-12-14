@@ -87,10 +87,9 @@ function checkForWin(row, col) {
         return true;
     }
 
-    // if(gameState.board.every(row => row.every(cell => cell !== ""))) {
-    //   alert("velha");
-    //   return true;
-    // }
+    if(gameState.board.every(row => row.every(cell => cell !== ""))) {
+        return 'tie';
+    }
 
     return false;
 }

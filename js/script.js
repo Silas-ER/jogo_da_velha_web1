@@ -77,22 +77,24 @@ function newAction(e) {
   gameState.board[row][col] = gameState.turn;
 
 
-  if (checkForWin(row, col)) {
-    gameState.gameOver = true;
-    gameState.winner = gameState.turn;
-    alert(`${gameState.turn} ganhou!`);
-  } else {
-    changeTurn();
-    gameState.turn = gameState.turn === "X" ? "O" : "X";
-  }
+  const result = checkForWin(row, col);
 
-  if (gameState.gameMode === "bot" && gameState.turn === gameState.player1) {
-    setTimeout(botMove, 500);
+  if (result === 'tie') {
+      gameState.gameOver = true;
+      alert(`Deu velha!`);
+  } else if (result) {
+      gameState.gameOver = true;
+      gameState.winner = gameState.turn;
+      alert(`O jogador com ${gameState.turn} venceu!`);
+  } else {
+      changeTurn();
+      gameState.turn = gameState.turn === "X" ? "O" : "X";
+
+      if (gameState.gameMode === "bot" && gameState.turn === gameState.player1) {
+          setTimeout(botMove, 500);
+      }
   }
 }
-
-
-
 
 //function to change the gameturn square div
 function changeTurn() {
