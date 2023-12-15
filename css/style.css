@@ -21,6 +21,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
 
 header {
@@ -36,6 +37,8 @@ select {
   color: #333;
   font-size: 1.2rem;
   cursor: pointer;
+  width: 100%;
+  margin: 10px 0;
   outline: none;
 }
 
@@ -44,11 +47,10 @@ select {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   height: 30%;
-  padding: 0 30%;
+  width: 60%;
 }
-
-
 
 button {
   margin: 10px 0;
@@ -58,6 +60,10 @@ button {
   color: #333;
   font-size: 1.2rem;
   cursor: pointer;
+}
+
+.buttonContainer button {
+  width: 100%;
 }
 
 .pvp {
@@ -77,14 +83,14 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 500px;
+  height: 500px
 }
 
 #boardGame {
-  width: 35vw;
-  height: 35vw;
+  width: 100%;
+  height: 100%;
 
-  min-width: 500px;
-  min-height: 500px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
@@ -178,26 +184,53 @@ footer {
   text-align: center;
 }
 
-#mainInputContainer {
-  position: relative;
-}
-
 #endGameModal {
-  display: none;
   position: fixed;
+  display: none;
   z-index: 1;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 20px;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
+  text-align: center;
 }
 
-.modal-content {
-  width: 100%;
-  height: 100%;
+#endGameModal h1 {
+  font-size: 3rem;
+}
+
+#endGameModal button {
+  padding: 10px 20px;
+  width: 40%;
+  height: 6%;
+  font-weight: bold;
+  text-align: center;
+}
+
+#endGameModalHeader {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 20px;
+}
+
+#winnerSquare {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  border: none;
+  justify-content: center;
+  align-items: center;
+} 
+
+@media screen and (max-width: 530px) {
+
+  #mainInputContainer {
+    width: 90vw;
+    height: 90vw;
+  }
 }

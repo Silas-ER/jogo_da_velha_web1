@@ -37,12 +37,17 @@
         <div id="boardGame">
 
         </div>
-
     </section>
 
     <section id="endGameModal">
-            <button id="resetButton" onclick="resetGame()">Resetar Jogo</button>
-            <button id="homeButton" onclick="returnHome()">Voltar para Home</button>
+        <div id="endGameModalHeader">
+            <h1 id="gameStatus"></h1>
+            <div class="square" id="winnerSquare">
+        </div>
+
+        </div>
+            <button id="resetButton" onclick="resetGame()">Reiniciar</button>
+            <button id="homeButton" onclick="returnHome()">Home</button>
     </section>
     <footer id="footer-page">
         Produzido pelos alunos Daniel, Luiz e Silas

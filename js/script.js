@@ -6,7 +6,9 @@ let gameState = {
   gameMode: "",
   turn: "",
   player1: "",
+  player2: "",
   gameOver: false,
+  tie: false,
   winner: "",
 };
 
@@ -14,17 +16,20 @@ let boardGame = [];
 
 //responsavel por gerar o tabuleiro do jogo da velha na tela
 const generateBoardGame = (gameMode) => {
-  gameState.turn = Math.random() < 0.5 ? "X" : "O";
+  gameState.player1 = Math.random() < 0.5 ? "X" : "O";
 
-  if (gameState.turn === "O") {
-    gameState.player1 = "X";
+  if (gameState.player1 === "O") {
+    gameState.player2 = "X";
   } else {
-    gameState.player1 = "O";
+    gameState.player2 = "O";
   }
+
+  gameState.turn = Math.random() < 0.5 ? "X" : "O";
 
   console.log(gameState);
 
-  if (gameState.gameStarted) { //verifica se o jogo já foi iniciado e impede que seja iniciado novamente
+  if (gameState.gameStarted) {
+    //verifica se o jogo já foi iniciado e impede que seja iniciado novamente
     return;
   }
 
@@ -34,7 +39,6 @@ const generateBoardGame = (gameMode) => {
   console.log(gameState.gameMode);
 
   gameState.size = parseInt(document.getElementById("boardSize").value); //captura o valor do input e converte para inteiro e armazena em gameState.size
-  
 
   gameState.board = [];
 
@@ -56,6 +60,9 @@ const generateBoardGame = (gameMode) => {
 
   changeGameHeader();
 
+  if (gameState.gameMode === "bot" && gameState.turn === gameState.player2) {
+    setTimeout(botMove, 50);
+  }
 };
 
 function newAction(e) {
@@ -76,25 +83,26 @@ function newAction(e) {
 
   gameState.board[row][col] = gameState.turn;
 
-
   const result = checkForWin(row, col);
 
-  if (result === 'tie') {
-      gameState.gameOver = true;
-      alert(`Deu velha!`);
-      showEndGameButtons();
+  if (result === "tie") {
+    console.log(gameState);
+    gameState.tie = true;
+    gameState.gameOver = true;
+    openEndGameModal();
   } else if (result) {
-      gameState.gameOver = true;
-      gameState.winner = gameState.turn;
-      alert(`O jogador com ${gameState.turn} venceu!`);
-      showEndGameButtons();
+    console.log(gameState);
+    gameState.gameOver = true;
+    gameState.winner = gameState.turn;
+    openEndGameModal();
   } else {
-      changeTurn();
-      gameState.turn = gameState.turn === "X" ? "O" : "X";
-
-      if (gameState.gameMode === "bot" && gameState.turn === gameState.player1) {
-          setTimeout(botMove, 500);
-      }
+    changeTurn();
+    gameState.turn = gameState.turn === "X" ? "O" : "X";
+    console.log(gameState);
+    if (gameState.gameMode === "bot" && gameState.turn === gameState.player2) {
+      setTimeout(botMove, 200);
+      return;
+    }
   }
 }
 
@@ -106,28 +114,37 @@ function changeTurn() {
 }
 
 function resetGame() {
-  hideEndGameButtons();
+  closeEndGameModal();
   gameState.gameStarted = false;
   gameState.gameOver = false;
   gameState.winner = "";
   gameState.turn = gameState.player1 === "X" ? "O" : "X";
-  
+
   const cells = document.querySelectorAll("div.square");
   cells.forEach((cell) => {
-    cell.innerHTML = ""; // Remover "X" e "O" das células
-    cell.classList.remove("cross", "circle"); // Remover estilos de "X" e "O"
-    gameState.board = gameState.board.map(row => row.map(() => "")); // Limpar o estado do tabuleiro
+    cell.innerHTML = "";
+    cell.classList.remove("cross", "circle");
+    gameState.board = gameState.board.map((row) => row.map(() => ""));
   });
-  
+
   changeGameHeader();
 }
 
-function showEndGameButtons() {
+function openEndGameModal() {
+  const gameStatus = document.getElementById("gameStatus");
+  if(!gameState.tie){
+    const winner = document.getElementById("winnerSquare");
+    winner.classList.add(gameState.winner === "X" ? "cross" : "circle");
+    gameStatus.innerHTML = "O vencedor é:";
+  } else {
+    gameStatus.innerHTML = "Empate!";
+  }
+
   const modal = document.getElementById("endGameModal");
   modal.style.display = "flex";
 }
 
-function hideEndGameButtons() {
+function closeEndGameModal() {
   const modal = document.getElementById("endGameModal");
   modal.style.display = "none";
 }
