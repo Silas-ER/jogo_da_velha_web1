@@ -123,17 +123,13 @@ function resetGame() {
 }
 
 function showEndGameButtons() {
-  const resetButton = document.getElementById("resetButton");
-  const homeButton = document.getElementById("homeButton");
-  resetButton.style.display = "block";
-  homeButton.style.display = "block";
+  const modal = document.getElementById("endGameModal");
+  modal.style.display = "flex";
 }
 
 function hideEndGameButtons() {
-  const resetButton = document.getElementById("resetButton");
-  const homeButton = document.getElementById("homeButton");
-  resetButton.style.display = "none";
-  homeButton.style.display = "none";
+  const modal = document.getElementById("endGameModal");
+  modal.style.display = "none";
 }
 
 function returnHome() {
